@@ -25,6 +25,7 @@ body {
 /* Header Styling */
 header {
     margin-bottom: 20px;
+    padding-top: 20px; /* Add space at the top of the header */
 }
 
 #header-image {

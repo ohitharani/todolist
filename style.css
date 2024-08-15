@@ -19,6 +19,7 @@ body {
     width: 90%;
     max-width: 500px;
     text-align: center;
+    position: relative;
 }
 
 /* Header Styling */
@@ -156,23 +157,28 @@ li.fade-out {
 li button {
     background: none;
     border: none;
-    color: #ff5c5c;
     font-size: 18px;
     margin-left: 10px;
     cursor: pointer;
     transition: color 0.3s ease;
 }
 
+/* Complete Button Styling */
 li button.complete-btn {
-    color: #28a745;
-}
-
-li button:hover {
-    color: #e60000;
+    color: #28a745; /* Green color for the checkmark */
 }
 
 li button.complete-btn:hover {
-    color: #218838;
+    color: #218838; /* Darker green on hover */
+}
+
+/* Delete Button Styling */
+li button:not(.complete-btn) {
+    color: #ff5c5c; /* Red color for the delete button */
+}
+
+li button:not(.complete-btn):hover {
+    color: #e60000; /* Darker red on hover */
 }
 
 /* Clear All Button Styling */
@@ -183,6 +189,17 @@ li button.complete-btn:hover {
 
 #clear-tasks:hover {
     background-color: #c9302c;
+}
+
+/* Footer Styling */
+footer {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+footer p {
+    margin: 0;
 }
 
 /* Media Query for Mobile Responsiveness */

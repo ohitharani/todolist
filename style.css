@@ -1,6 +1,7 @@
+/* General Body Styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
     margin: 0;
     padding: 0;
     display: flex;
@@ -9,74 +10,135 @@ body {
     height: 100vh;
 }
 
+/* Container Styling */
 .container {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 400px;
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 500px;
     text-align: center;
 }
 
+/* Heading Styling */
 h1 {
-    color: #333;
+    color: #333333;
+    font-size: 2rem;
+    margin-bottom: 20px;
 }
 
+/* Form and Input Styling */
 form {
     display: flex;
+    justify-content: space-between;
     margin-bottom: 20px;
 }
 
 input[type="text"] {
     flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
     margin-right: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
 }
 
+input[type="text"]:focus {
+    border-color: #5cb85c;
+    outline: none;
+}
+
+/* Button Styling */
 button {
-    padding: 10px 20px;
+    padding: 12px 20px;
     background-color: #5cb85c;
-    color: #fff;
+    color: #ffffff;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
+    font-size: 1rem;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
     background-color: #4cae4c;
+    transform: scale(1.05);
 }
 
+/* Task List Styling */
 ul {
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
 li {
-    background: #f0f0f0;
+    background: #f9f9f9;
     margin: 10px 0;
-    padding: 10px;
-    border-radius: 4px;
+    padding: 12px 15px;
+    border-radius: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+li:hover {
+    background-color: #eef;
 }
 
 li.completed {
     text-decoration: line-through;
-    color: #888;
+    color: #888888;
+    background-color: #d4edda;
 }
 
+/* Task Item Button Styling */
 li button {
     background: none;
     border: none;
     color: #ff5c5c;
+    font-size: 18px;
+    margin-left: 10px;
     cursor: pointer;
-    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+li button.complete-btn {
+    color: #28a745;
 }
 
 li button:hover {
-    color: #ff1c1c;
+    color: #e60000;
+}
+
+li button.complete-btn:hover {
+    color: #218838;
+}
+
+/* Media Query for Mobile Responsiveness */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px 20px;
+    }
+
+    input[type="text"] {
+        font-size: 0.9rem;
+    }
+
+    button {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    li {
+        padding: 10px 12px;
+    }
+
+    li button {
+        font-size: 16px;
+    }
 }

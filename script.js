@@ -30,17 +30,4 @@ function addTask(taskText, saveToLocalStorage = true) {
     
     const completeButton = document.createElement('button');
     completeButton.innerHTML = '✔';
-    completeButton.classList.add('complete-btn');
-    completeButton.addEventListener('click', function() {
-        taskItem.classList.toggle('completed');
-        filterTasks(document.querySelector('.filter-btn.active').dataset.filter);
-        updateLocalStorage();
-    });
-    
-    const deleteButton = document.createElement('button');
-    deleteButton.innerHTML = '✖';
-    deleteButton.addEventListener('click', function() {
-        if (confirm('Are you sure you want to delete this task?')) {
-            taskItem.classList.add('fade-out');
-            setTimeout(() => {
-                taskList.removeChild(taskItem);
+    completeButton

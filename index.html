@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Import Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
 </head>
 <body>
     <div class="container">
@@ -16,13 +18,12 @@
         <!-- Instructions Section -->
         <p id="instructions">
             Welcome to your To-Do List! Manage your tasks effectively using the filters below. 
-            Add a task and its deadline using the input box, mark tasks as completed, delete them, or filter to view only active or completed tasks.
+            Add a task using the input box, mark tasks as completed, delete them, or filter to view only active or completed tasks.
         </p>
 
         <!-- Form for Adding Tasks -->
         <form id="todo-form">
             <input type="text" id="new-task" placeholder="Enter a new task" required>
-            <input type="date" id="task-deadline" required>
             <button type="submit">Add Task</button>
         </form>
 

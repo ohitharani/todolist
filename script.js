@@ -22,7 +22,10 @@ function addTask(taskText, taskDeadline, saveToLocalStorage = true) {
     const taskList = document.getElementById('task-list');
     
     const taskItem = document.createElement('li');
-    taskItem.innerHTML = `<span class="task-text">${taskText}</span> <span class="task-deadline">Due: ${taskDeadline}</span>`;
+    taskItem.innerHTML = `
+        <span class="task-text">${taskText}</span>
+        <span class="task-deadline">Due: ${taskDeadline}</span>
+    `;
 
     // Add animation
     taskItem.style.opacity = 0;
@@ -109,16 +112,4 @@ function loadTasks() {
 // Clear all tasks
 document.getElementById('clear-tasks').addEventListener('click', function() {
     if (confirm('Are you sure you want to clear all tasks?')) {
-        document.getElementById('task-list').innerHTML = '';
-        updateLocalStorage();
-    }
-});
-
-// Filter tasks on button click
-document.querySelectorAll('#filters .filter-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        document.querySelector('.filter-btn.active').classList.remove('active');
-        this.classList.add('active');
-        filterTasks(this.dataset.filter);
-    });
-});
+        document

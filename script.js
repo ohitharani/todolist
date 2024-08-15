@@ -6,23 +6,20 @@ document.getElementById('todo-form').addEventListener('submit', function(event) 
     event.preventDefault(); // Prevent default form submission
     
     const taskInput = document.getElementById('new-task');
-    const deadlineInput = document.getElementById('task-deadline');
     const taskText = taskInput.value.trim();
-    const taskDeadline = deadlineInput.value;
     
-    if (taskText !== '' && taskDeadline !== '') {
-        addTask(taskText, taskDeadline);
+    if (taskText !== '') {
+        addTask(taskText);
         taskInput.value = ''; // Clear input after adding task
-        deadlineInput.value = ''; // Clear deadline input
     }
 });
 
 // Function to add a task to the list
-function addTask(taskText, taskDeadline, saveToLocalStorage = true) {
+function addTask(taskText, saveToLocalStorage = true) {
     const taskList = document.getElementById('task-list');
     
     const taskItem = document.createElement('li');
-    taskItem.innerHTML = `<span class="task-text">${taskText}</span> <span class="task-deadline">Due: ${taskDeadline}</span>`;
+    taskItem.innerText = taskText;
 
     // Add animation
     taskItem.style.opacity = 0;
@@ -86,8 +83,7 @@ function updateLocalStorage() {
     const tasks = [];
     document.querySelectorAll('#task-list li').forEach(task => {
         tasks.push({
-            text: task.querySelector('.task-text').textContent,
-            deadline: task.querySelector('.task-deadline').textContent.replace('Due: ', ''),
+            text: task.firstChild.textContent,
             completed: task.classList.contains('completed')
         });
     });
@@ -98,7 +94,7 @@ function updateLocalStorage() {
 function loadTasks() {
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     tasks.forEach(task => {
-        addTask(task.text, task.deadline, false);
+        addTask(task.text, false);
         if (task.completed) {
             const taskListItem = document.querySelector('#task-list li:last-child');
             taskListItem.classList.add('completed');

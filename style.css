@@ -20,12 +20,12 @@ body {
     max-width: 500px;
     text-align: center;
     position: relative;
+    padding-top: 60px; /* Increased padding at the top of the container */
 }
 
 /* Header Styling */
 header {
     margin-bottom: 20px;
-    padding-top: 40px; /* Increased space at the top of the header */
 }
 
 #header-image {

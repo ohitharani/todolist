@@ -26,7 +26,17 @@ function addTask(taskText, deadline, saveToLocalStorage = true) {
     // Create a div to hold task text and deadline
     const taskContent = document.createElement('div');
     taskContent.classList.add('task-content');
-    taskContent.innerText = `${taskText} (Due: ${deadline})`;
+    
+    const taskTextElement = document.createElement('span');
+    taskTextElement.classList.add('task-text');
+    taskTextElement.innerText = taskText;
+
+    const taskDeadlineElement = document.createElement('span');
+    taskDeadlineElement.classList.add('task-deadline');
+    taskDeadlineElement.innerText = `Due: ${deadline}`;
+
+    taskContent.appendChild(taskTextElement);
+    taskContent.appendChild(taskDeadlineElement);
     
     taskItem.appendChild(taskContent);
     
@@ -80,9 +90,9 @@ function updateLocalStorage() {
     const tasks = [];
 
     taskItems.forEach(taskItem => {
-        const taskContent = taskItem.querySelector('.task-content').textContent;
-        const taskText = taskContent.split(' (Due: ')[0];
-        const deadline = taskContent.split(' (Due: ')[1].slice(0, -1); // Extract deadline from content
+        const taskContent = taskItem.querySelector('.task-content');
+        const taskText = taskContent.querySelector('.task-text').textContent;
+        const deadline = taskContent.querySelector('.task-deadline').textContent.replace('Due: ', ''); // Extract deadline from content
         const taskCompleted = taskItem.classList.contains('completed');
         tasks.push({ text: taskText, deadline: deadline, completed: taskCompleted });
     });

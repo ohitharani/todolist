@@ -183,6 +183,15 @@ li button:not(.complete-btn):hover {
     color: #e60000; /* Darker red on hover */
 }
 
+/* Highlight tasks due within the next 24 hours */
+li .task-content {
+    color: #333;
+}
+
+li .task-content[data-due-soon="true"] {
+    color: orange; /* Change text color to orange if due soon */
+}
+
 /* Clear All Button Styling */
 #clear-tasks {
     margin-top: 20px;

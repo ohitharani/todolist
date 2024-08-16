@@ -33,7 +33,7 @@ function addTask(taskText, dueDate, saveToLocalStorage = true) {
     
     const taskDeadlineElement = document.createElement('div');
     taskDeadlineElement.classList.add('task-deadline');
-    taskDeadlineElement.innerText = `Due: ${new Date(dueDate).toLocaleDateString()}`;
+    taskDeadlineElement.innerText = `Due: ${formatDate(new Date(dueDate))}`;
     
     taskContent.appendChild(taskTextElement);
     taskContent.appendChild(taskDeadlineElement);
@@ -77,6 +77,12 @@ function addTask(taskText, dueDate, saveToLocalStorage = true) {
     if (saveToLocalStorage) {
         saveTaskToLocalStorage(taskText, dueDate);
     }
+}
+
+// Function to format the date
+function formatDate(date) {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return date.toLocaleDateString(undefined, options);
 }
 
 // Function to save tasks to local storage

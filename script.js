@@ -6,27 +6,29 @@ document.getElementById('todo-form').addEventListener('submit', function(event) 
     event.preventDefault();
     
     const taskInput = document.getElementById('new-task');
+    const taskDeadline = document.getElementById('task-deadline');
     const taskText = taskInput.value.trim();
+    const deadline = taskDeadline.value; // Get the deadline value
     
-    if (taskText !== '') {
-        addTask(taskText);
+    if (taskText !== '' && deadline !== '') {
+        addTask(taskText, deadline);
         taskInput.value = ''; // Clear input after adding task
+        taskDeadline.value = ''; // Clear deadline after adding task
     }
 });
 
 // Function to add a task to the list
-function addTask(taskText, saveToLocalStorage = true) {
+function addTask(taskText, deadline, saveToLocalStorage = true) {
     const taskList = document.getElementById('task-list');
     
     const taskItem = document.createElement('li');
-    taskItem.innerText = taskText;
-
-    // Add animation
-    taskItem.style.opacity = 0;
-    setTimeout(() => {
-        taskItem.style.opacity = 1;
-        taskItem.style.transform = 'scale(1)';
-    }, 0);
+    
+    // Create a div to hold task text and deadline
+    const taskContent = document.createElement('div');
+    taskContent.classList.add('task-content');
+    taskContent.innerText = `${taskText} (Due: ${deadline})`;
+    
+    taskItem.appendChild(taskContent);
     
     const completeButton = document.createElement('button');
     completeButton.innerHTML = '✔';
@@ -64,7 +66,7 @@ function loadTasks() {
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
     tasks.forEach(task => {
-        addTask(task.text, false);
+        addTask(task.text, task.deadline, false);
         if (task.completed) {
             const taskItem = document.getElementById('task-list').lastChild;
             taskItem.classList.add('completed');
@@ -78,9 +80,11 @@ function updateLocalStorage() {
     const tasks = [];
 
     taskItems.forEach(taskItem => {
-        const taskText = taskItem.firstChild.textContent;
+        const taskContent = taskItem.querySelector('.task-content').textContent;
+        const taskText = taskContent.split(' (Due: ')[0];
+        const deadline = taskContent.split(' (Due: ')[1].slice(0, -1); // Extract deadline from content
         const taskCompleted = taskItem.classList.contains('completed');
-        tasks.push({ text: taskText, completed: taskCompleted });
+        tasks.push({ text: taskText, deadline: deadline, completed: taskCompleted });
     });
 
     localStorage.setItem('tasks', JSON.stringify(tasks));

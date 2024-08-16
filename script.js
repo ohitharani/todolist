@@ -6,39 +6,47 @@ document.getElementById('todo-form').addEventListener('submit', function(event) 
     event.preventDefault();
     
     const taskInput = document.getElementById('new-task');
-    const taskDeadline = document.getElementById('task-deadline');
+    const dateInput = document.getElementById('due-date');
     const taskText = taskInput.value.trim();
-    const deadline = taskDeadline.value; // Get the deadline value
+    const dueDate = dateInput.value;
     
-    if (taskText !== '' && deadline !== '') {
-        addTask(taskText, deadline);
+    if (taskText !== '' && dueDate !== '') {
+        addTask(taskText, dueDate);
         taskInput.value = ''; // Clear input after adding task
-        taskDeadline.value = ''; // Clear deadline after adding task
+        dateInput.value = ''; // Clear date input after adding task
     }
 });
 
 // Function to add a task to the list
-function addTask(taskText, deadline, saveToLocalStorage = true) {
+function addTask(taskText, dueDate, saveToLocalStorage = true) {
     const taskList = document.getElementById('task-list');
     
     const taskItem = document.createElement('li');
     
-    // Create a div to hold task text and deadline
+    // Create task content
     const taskContent = document.createElement('div');
     taskContent.classList.add('task-content');
     
-    const taskTextElement = document.createElement('span');
+    const taskTextElement = document.createElement('div');
     taskTextElement.classList.add('task-text');
     taskTextElement.innerText = taskText;
-
-    const taskDeadlineElement = document.createElement('span');
+    
+    const taskDeadlineElement = document.createElement('div');
     taskDeadlineElement.classList.add('task-deadline');
-    taskDeadlineElement.innerText = `Due: ${deadline}`;
-
+    taskDeadlineElement.innerText = `Due: ${new Date(dueDate).toLocaleDateString()}`;
+    
     taskContent.appendChild(taskTextElement);
     taskContent.appendChild(taskDeadlineElement);
     
+    // Append content to the task item
     taskItem.appendChild(taskContent);
+
+    // Add animation
+    taskItem.style.opacity = 0;
+    setTimeout(() => {
+        taskItem.style.opacity = 1;
+        taskItem.style.transform = 'scale(1)';
+    }, 0);
     
     const completeButton = document.createElement('button');
     completeButton.innerHTML = '✔';
@@ -51,7 +59,6 @@ function addTask(taskText, deadline, saveToLocalStorage = true) {
     
     const deleteButton = document.createElement('button');
     deleteButton.innerHTML = '✖';
-    deleteButton.classList.add('delete-btn');
     deleteButton.addEventListener('click', function() {
         if (confirm('Are you sure you want to delete this task?')) {
             taskItem.classList.add('fade-out');
@@ -64,77 +71,68 @@ function addTask(taskText, deadline, saveToLocalStorage = true) {
     
     taskItem.appendChild(completeButton);
     taskItem.appendChild(deleteButton);
+    
     taskList.appendChild(taskItem);
-
+    
     if (saveToLocalStorage) {
-        updateLocalStorage();
+        saveTaskToLocalStorage(taskText, dueDate);
     }
 }
 
-// Function to load tasks from local storage
-function loadTasks() {
+// Function to save tasks to local storage
+function saveTaskToLocalStorage(taskText, dueDate) {
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-
-    tasks.forEach(task => {
-        addTask(task.text, task.deadline, false);
-        if (task.completed) {
-            const taskItem = document.getElementById('task-list').lastChild;
-            taskItem.classList.add('completed');
-        }
-    });
-}
-
-// Function to update local storage
-function updateLocalStorage() {
-    const taskItems = document.querySelectorAll('#task-list li');
-    const tasks = [];
-
-    taskItems.forEach(taskItem => {
-        const taskContent = taskItem.querySelector('.task-content');
-        const taskText = taskContent.querySelector('.task-text').textContent;
-        const deadline = taskContent.querySelector('.task-deadline').textContent.replace('Due: ', ''); // Extract deadline from content
-        const taskCompleted = taskItem.classList.contains('completed');
-        tasks.push({ text: taskText, deadline: deadline, completed: taskCompleted });
-    });
-
+    tasks.push({ taskText, dueDate });
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// Function to filter tasks based on the selected filter
+// Load tasks from local storage
+function loadTasks() {
+    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+    tasks.forEach(task => addTask(task.taskText, task.dueDate, false));
+}
+
+// Filter tasks
 function filterTasks(filter) {
     const taskItems = document.querySelectorAll('#task-list li');
-
-    taskItems.forEach(taskItem => {
+    
+    taskItems.forEach(item => {
+        const isCompleted = item.classList.contains('completed');
+        const dueDate = new Date(item.querySelector('.task-deadline').innerText.replace('Due: ', ''));
+        const now = new Date();
+        const dueSoon = (dueDate - now) <= (24 * 60 * 60 * 1000);
+        
         switch (filter) {
             case 'all':
-                taskItem.style.display = '';
+                item.style.display = '';
                 break;
             case 'active':
-                taskItem.style.display = taskItem.classList.contains('completed') ? 'none' : '';
+                item.style.display = isCompleted ? 'none' : '';
                 break;
             case 'completed':
-                taskItem.style.display = taskItem.classList.contains('completed') ? '' : 'none';
+                item.style.display = isCompleted ? '' : 'none';
                 break;
         }
+        
+        item.querySelector('.task-content').setAttribute('data-due-soon', dueSoon);
     });
 }
 
-// Add event listener to filter buttons
-document.querySelectorAll('.filter-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        document.querySelector('.filter-btn.active').classList.remove('active');
-        this.classList.add('active');
-        filterTasks(this.dataset.filter);
+// Update local storage
+function updateLocalStorage() {
+    const tasks = [];
+    document.querySelectorAll('#task-list li').forEach(item => {
+        const taskText = item.querySelector('.task-text').innerText;
+        const dueDate = item.querySelector('.task-deadline').innerText.replace('Due: ', '');
+        tasks.push({ taskText, dueDate, completed: item.classList.contains('completed') });
     });
-});
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
 
-// Add event listener to the "Clear All Tasks" button
+// Clear all tasks
 document.getElementById('clear-tasks').addEventListener('click', function() {
     if (confirm('Are you sure you want to clear all tasks?')) {
-        const taskList = document.getElementById('task-list');
-        while (taskList.firstChild) {
-            taskList.removeChild(taskList.firstChild);
-        }
-        updateLocalStorage();
+        document.getElementById('task-list').innerHTML = '';
+        localStorage.removeItem('tasks');
     }
 });

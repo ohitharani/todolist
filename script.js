@@ -75,7 +75,7 @@ function addTask(taskText, dueDate, saveToLocalStorage = true) {
     taskList.appendChild(taskItem);
     
     if (saveToLocalStorage) {
-        saveTaskToLocalStorage(taskText, dueDate);
+        saveTaskToLocalStorage(taskText, dueDate, taskItem.classList.contains('completed'));
     }
 }
 
@@ -86,16 +86,16 @@ function formatDate(date) {
 }
 
 // Function to save tasks to local storage
-function saveTaskToLocalStorage(taskText, dueDate) {
+function saveTaskToLocalStorage(taskText, dueDate, completed) {
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    tasks.push({ taskText, dueDate });
+    tasks.push({ taskText, dueDate, completed });
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 // Load tasks from local storage
 function loadTasks() {
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    tasks.forEach(task => addTask(task.taskText, task.dueDate, false));
+    tasks.forEach(task => addTask(task.taskText, task.dueDate, false, task.completed));
 }
 
 // Filter tasks
@@ -130,7 +130,8 @@ function updateLocalStorage() {
     document.querySelectorAll('#task-list li').forEach(item => {
         const taskText = item.querySelector('.task-text').innerText;
         const dueDate = item.querySelector('.task-deadline').innerText.replace('Due: ', '');
-        tasks.push({ taskText, dueDate, completed: item.classList.contains('completed') });
+        const completed = item.classList.contains('completed');
+        tasks.push({ taskText, dueDate, completed });
     });
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }

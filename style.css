@@ -19,12 +19,17 @@ body {
     width: 90%;
     max-width: 500px;
     text-align: center;
-    position: relative;
 }
 
 /* Header Styling */
 header {
     margin-bottom: 20px;
+}
+
+#header-image {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 15px;
 }
 
 h1 {
@@ -183,17 +188,6 @@ li button:not(.complete-btn):hover {
 
 #clear-tasks:hover {
     background-color: #c9302c;
-}
-
-/* Footer Styling */
-footer {
-    margin-top: 20px;
-    font-size: 0.9rem;
-    color: #777;
-}
-
-footer p {
-    margin: 0;
 }
 
 /* Media Query for Mobile Responsiveness */

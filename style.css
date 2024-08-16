@@ -17,10 +17,10 @@ body {
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 90%; /* Adjust to make it responsive */
+    width: 90%;
     max-width: 500px;
     text-align: center;
-    box-sizing: border-box; /* Include padding in width */
+    box-sizing: border-box;
 }
 
 /* Header Styling */
@@ -28,23 +28,16 @@ header {
     margin-bottom: 20px;
 }
 
-#header-image {
-    width: 100%;
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 12px;
-    margin-bottom: 15px;
-}
-
 h1 {
     color: #333333;
-    font-size: 1.8rem; /* Adjusted for better scaling */
+    font-size: 2rem;
     margin-bottom: 20px;
     font-weight: 700;
 }
 
 /* Instructions Styling */
 #instructions {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #555;
     margin-bottom: 20px;
     line-height: 1.6;
@@ -64,13 +57,12 @@ form {
 
 input[type="text"] {
     flex: 1;
-    padding: 10px;
+    padding: 12px 15px;
     border: 2px solid #ddd;
     border-radius: 8px;
     margin-right: 10px;
     font-size: 1rem;
     transition: border-color 0.3s ease;
-    box-sizing: border-box;
 }
 
 input[type="text"]:focus {
@@ -80,7 +72,7 @@ input[type="text"]:focus {
 
 /* Button Styling */
 button {
-    padding: 10px 15px;
+    padding: 12px 20px;
     background-color: #5cb85c;
     color: #ffffff;
     border: none;
@@ -88,7 +80,6 @@ button {
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    box-sizing: border-box;
 }
 
 button:hover {
@@ -107,12 +98,11 @@ button:hover {
     background-color: #f0f0f0;
     border: none;
     border-radius: 8px;
-    padding: 10px 15px;
+    padding: 10px 20px;
     margin: 0 5px;
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.3s ease, color 0.3s ease;
-    box-sizing: border-box;
 }
 
 .filter-btn.active, .filter-btn:hover {
@@ -129,7 +119,6 @@ ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    box-sizing: border-box;
 }
 
 li {
@@ -142,7 +131,6 @@ li {
     align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: background-color 0.3s ease, opacity 0.3s ease;
-    box-sizing: border-box;
 }
 
 li:hover {
@@ -212,7 +200,7 @@ footer p {
 /* Media Query for Mobile Responsiveness */
 @media (max-width: 480px) {
     .container {
-        padding: 15px;
+        padding: 20px 20px;
     }
 
     input[type="text"] {
@@ -220,7 +208,7 @@ footer p {
     }
 
     button {
-        padding: 8px 12px;
+        padding: 10px 15px;
         font-size: 0.9rem;
     }
 
